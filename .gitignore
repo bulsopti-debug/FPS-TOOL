@@ -1,0 +1,14 @@
+# Build output
+*.exe
+*.pdb
+bin/
+obj/
+
+# Runtime backups the tool creates
+BULS Opti Backups/
+
+# Editor / OS
+*.user
+.vs/
+Thumbs.db
+desktop.ini
