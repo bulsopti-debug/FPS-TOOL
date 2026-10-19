@@ -1,83 +1,78 @@
 <div align="center">
 
-<img src="src/bull.png" width="96" alt="BUL$ Opti">
+<img src="src/bull.png" width="88" alt="BUL$ Opti">
 
-# FPS-TOOL — BUL$ Opti
+# FPS-TOOL — BUL$ Opti Free
 
-**Бесплатный мини-оптимизатор игрового ПК под Windows.**
-Одна кнопка — набор безопасных, **полностью обратимых** твиков, проверка системы и глубокая очистка от кэша и хлама.
+**A free, open-source tweaker for gaming PCs on Windows.**
+Shows exactly what it will change before it changes anything, keeps your previous values, and puts them back with one button.
 
-`WPF` · `C# (.NET Framework 4)` · без сторонних зависимостей · открытый код
+`3.1` · `WPF` · `C# 5 / .NET Framework 4` · no third-party code · MIT
 
 </div>
 
 ---
 
-## Что умеет
+## What it does
 
-| Раздел | Описание |
+| Section | |
 |---|---|
-| **Главная** | Оценка состояния ПК, оптимизация в один клик, быстрая чистка со счётчиком «освобождено за всё время», сводка по железу. |
-| **Проверка ПК** | Читает реальное состояние системы и показывает, что уже оптимально, а что можно улучшить (13 проверок) + характеристики железа. |
-| **Настройка** | 16 твиков вручную с пресетами (Рекомендуемые / Игры / Чистка). У каждого — описание и уровень риска. |
-| **Очистка** | Поддержка ПК: 12 категорий кэша и хлама с реальными размерами — temp, корзина, кэш браузеров, шейдеры GPU, обновления Windows, дампы, логи и др. |
-| **PRO** | Витрина платного приложения [BUL$ Opti PRO](https://www.bulsopti.com/app) — отдельного продукта с мониторингом, профилями под игры, BIOS-анализом и тонкой настройкой. |
+| **Overview** | How many recommendations are already applied, the list of what will change, your hardware at a glance and a quick temp-file cleanup with an all-time counter. |
+| **Check-up** | Real problems on your PC: monitor running below its max refresh rate, low disk space, a pending Windows restart, GPU scheduling, startup apps — plus the current state of every setting. |
+| **Tweaks** | 14 tweaks with presets (Recommended, For gaming, Responsiveness). Each one shows its risk and the exact registry value: current → new. Turning a tweak off restores your previous value. |
+| **Cleanup** | 10 categories with sizes: temp files, browser cache, DNS, Recycle Bin, GPU shader cache, thumbnails, Windows Update and Delivery Optimization caches, crash dumps, old logs. Risky ones are off by default and explained. |
+| **Activity log** | Everything the tool did, also saved to `%LOCALAPPDATA%\BULS Opti\log.txt`. |
+| **BUL$ Opti PRO** | A page about the separate paid app. This free tool doesn't replace or unlock it. |
 
-## Скриншоты
+Languages: English (default), Русский, Українська, Deutsch, Español, Português, Türkçe, Polski.
 
-| Главная | Проверка ПК |
+## Screenshots
+
+| Overview | Check-up |
 |---|---|
-| ![Главная](screenshots/home.png) | ![Проверка](screenshots/scan.png) |
+| ![Overview](screenshots/overview.png) | ![Check-up](screenshots/check-up.png) |
 
-| Очистка | Настройка |
+| Tweaks | Cleanup |
 |---|---|
-| ![Очистка](screenshots/cleanup.png) | ![Настройка](screenshots/tweaks.png) |
+| ![Tweaks](screenshots/tweaks.png) | ![Cleanup](screenshots/cleanup.png) |
 
-<div align="center">
+## Safety
 
-![PRO](screenshots/pro.png)
+- **Starts without admin rights.** It asks for them only right before a change that needs them, lists why, then restarts elevated and continues.
+- **Undo all** restores the values *you* had before — not Windows defaults. They're saved under `HKCU\Software\BULS Opti\Undo` before the first change.
+- Creates a Windows restore point (native API) when System Protection is on.
+- Cleanup never follows folder links (junctions/symlinks), skips files in use, removes temp files only when they're older than a day, and asks before touching a non-standard `%TEMP%` or the Recycle Bin.
+- No external processes, no network calls, no services, no scheduled tasks, no autostart.
+- Doesn't touch Defender, the firewall, Windows Update, services or the page file.
 
-</div>
+The optional BUL$ Opti wallpaper is a visible checkbox; your previous wallpaper comes back with **Undo all**.
 
-## Безопасность
+## Build
 
-- Перед применением создаётся **точка восстановления Windows** (родной системный вызов, без запуска сторонних процессов).
-- Бэкап изменяемых веток реестра сохраняется в `Документы\BULS Opti Backups`.
-- Кнопка **«Откатить оптимизации»** возвращает твики к значениям по умолчанию.
-- **Не трогает:** Защитник, брандмауэр, обновления, службы, файл подкачки.
-- Никакой телеметрии, сети и скрытых действий — код открыт, читайте [`src/Program.cs`](src/Program.cs).
+Only Windows is needed — the C# compiler ships with .NET Framework 4.
 
-При авто-оптимизации на рабочий стол также ставятся обои BUL$ Opti (убираются через Параметры Windows → Персонализация).
-
-## Сборка из исходников
-
-Нужен только Windows — компилятор C# (`csc`) уже входит в состав .NET Framework 4.
-
-```bat
+```powershell
 cd src
-build.cmd
+.\build.ps1            # release: BulsOptiFree.exe
+.\build.ps1 -Preview   # no manifest, for rendering screens
+.\preview.exe screenshot out.png overview en   # draws a screen to PNG without changing anything
 ```
 
-Соберётся `BULS Opti Optimizer.exe` — приложение запускается с правами администратора (требуется для системных твиков).
+The `.exe` isn't code-signed, so SmartScreen may show "unknown publisher" on first run (More info → Run anyway). The download on [bulsopti.com/free](https://bulsopti.com/free) is built from this source.
 
-> `.exe` не подписан цифровой подписью, поэтому при первом запуске SmartScreen может показать «неизвестный издатель» — это нормально для неподписанных сборок («Подробнее» → «Выполнить в любом случае»).
-
-## Структура
+## Layout
 
 ```
-FPS-TOOL/
-├─ src/                 исходники C# (WPF, без XAML)
-│  ├─ App.cs            интерфейс: боковое меню, экраны, логика
-│  ├─ Program.cs        движок: твики, скан, очистка, бэкап
-│  ├─ AssemblyInfo.cs   метаданные версии
-│  ├─ app.manifest      запрос прав администратора
-│  ├─ build.cmd         сборка одной командой
-│  └─ *.png, *.ico      ресурсы (логотип, обои, иконка)
-├─ screenshots/         скриншоты интерфейса
-├─ LICENSE              MIT
-└─ README.md
+src/
+  Engine.cs     tweaks, undo journal, power plan, restore point, system info, diagnostics
+  Clean.cs      cleanup categories and a safe folder walker
+  Loc.cs        all UI strings in 8 languages
+  Ui.cs         theme and control templates
+  App.cs        window, pages, dialogs, elevation
+  build.ps1     build script
+screenshots/
 ```
 
-## Лицензия
+## License
 
 [MIT](LICENSE) · © 2026 BUL$ Opti · [bulsopti.com](https://bulsopti.com)

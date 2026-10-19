@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
-  <assemblyIdentity version="1.0.0.0" name="BulsOpti.Optimizer"/>
+  <assemblyIdentity version="3.1.0.0" name="BulsOpti.Free"/>
+  <description>BUL$ Opti Free - gaming PC tweaks and cleanup</description>
   <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
     <security>
       <requestedPrivileges>
-        <requestedExecutionLevel level="requireAdministrator" uiAccess="false"/>
+        <!-- Права администратора не требуются при запуске: программа просит их только перед действием -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false"/>
       </requestedPrivileges>
     </security>
   </trustInfo>
